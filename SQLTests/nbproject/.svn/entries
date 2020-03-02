@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="2"
+   name=""
+   committed-date="2010-05-25T09:20:18.636929Z"
+   url="svn://rw.msiu.ru:3000/Tests/SQLTests/SQLTests/nbproject"
+   last-author="radigin"
+   kind="dir"
+   uuid="8c7a1e84-2f71-4764-985d-ea81bd8d3339"
+   repos="svn://rw.msiu.ru:3000/Tests/SQLTests"
+   prop-time="2014-04-21T15:43:46.000000Z"
+   revision="3"/>
+<entry
+   committed-rev="2"
+   name="project.properties"
+   text-time="2014-04-21T15:43:46.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="6077cb891031924eb8ea84ab7c270d07"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:46.000000Z"/>
+<entry
+   committed-rev="2"
+   name="project.xml"
+   text-time="2014-04-21T15:43:46.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="4d021a854c07aa81bc678b3a61f1bf36"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:46.000000Z"/>
+</wc-entries>

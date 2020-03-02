@@ -1,0 +1,7 @@
+SQLTests
+
+This project is used for creating tasks for student tests.
+Suppose that SQL = PSQL (PostgreSQL).
+
+Project has some bugs in first question. For example some questions
+have two equal right answers.

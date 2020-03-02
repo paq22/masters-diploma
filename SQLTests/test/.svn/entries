@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="2"
+   name=""
+   committed-date="2010-05-25T09:20:18.636929Z"
+   url="svn://rw.msiu.ru:3000/Tests/SQLTests/SQLTests/test"
+   last-author="radigin"
+   kind="dir"
+   uuid="8c7a1e84-2f71-4764-985d-ea81bd8d3339"
+   repos="svn://rw.msiu.ru:3000/Tests/SQLTests"
+   revision="3"/>
+</wc-entries>

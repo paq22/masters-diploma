@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="3"
+   name=""
+   committed-date="2010-05-25T11:12:41.870341Z"
+   url="svn://rw.msiu.ru:3000/Tests/SQLTests/SQLTests/lib"
+   last-author="radigin"
+   kind="dir"
+   uuid="8c7a1e84-2f71-4764-985d-ea81bd8d3339"
+   repos="svn://rw.msiu.ru:3000/Tests/SQLTests"
+   revision="3"/>
+<entry
+   committed-rev="2"
+   name="test.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="26774d46543b136770b3aad7ec40ee33"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="qq"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="f392e7b0815ab9949b406b5b464c3058"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="theme1.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="6c5ac92626fb4399309bf39e4bef1db0"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="main.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="3ca051d8db51ee791a8ce5589f8defab"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="theme2.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="c5cd4ac86ea9e37ab04a10062f55e39e"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="theme3.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="5994ccc00be848fab685012525c0f8fc"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="theme4.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="3718377ac554e4921c580fa2016de5ac"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="3"
+   name="question1.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T11:12:41.870341Z"
+   checksum="5044ffbf10ded2bfd1273facf06ccbd6"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="question2.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="8733af68743914e9d90fc0df0149b064"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="question3.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="1b71e7264126cd11a0e485ef7685afff"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="question4.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="1194e2d6ac2c7c0dc4b3f9b2cfd0cb6e"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="question5.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="bc6c2ba910428174d35d8d5ceda34431"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="question1_text.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="e304b260e8d6d36cc3dc47c9aad3205b"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="question2_text.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="74789415634e480066fd1e3bb9251696"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="question6.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="a47fc2e9fadd03ea012403d0ef825cd6"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   name="tmp"
+   kind="dir"/>
+<entry
+   committed-rev="2"
+   name="question3_text.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="92b89e49974c464efbd93aff6bd0a85d"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="question4_text.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="69bc327ca0ff368d765755d2ee8f8b9a"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="question5_text.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="180e29be237f83178e58d8d44e838301"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="tests"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="cf6b7bf27377737fda355f4999ac9435"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="question6_text.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="4e6b86a4fb5e990a8569f69ce9b70492"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+<entry
+   committed-rev="2"
+   name="psql_runner.rb"
+   text-time="2014-04-21T15:43:45.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="c40c18271e2c4e2c0b22227576d045da"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:45.000000Z"/>
+</wc-entries>

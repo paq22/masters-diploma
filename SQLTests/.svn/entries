@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="3"
+   name=""
+   committed-date="2010-05-25T11:12:41.870341Z"
+   url="svn://rw.msiu.ru:3000/Tests/SQLTests/SQLTests"
+   last-author="radigin"
+   kind="dir"
+   uuid="8c7a1e84-2f71-4764-985d-ea81bd8d3339"
+   repos="svn://rw.msiu.ru:3000/Tests/SQLTests"
+   revision="3"/>
+<entry
+   name="test"
+   kind="dir"/>
+<entry
+   committed-rev="2"
+   name="LICENSE"
+   text-time="2014-04-21T15:43:46.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="fcdcdb0ae2a22bdf03e47fab3672600f"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:44.000000Z"/>
+<entry
+   committed-rev="2"
+   name="Rakefile"
+   text-time="2014-04-21T15:43:46.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="bcea15bd4f7da1d114ff215ad2ab1a94"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:44.000000Z"/>
+<entry
+   name="lib"
+   kind="dir"/>
+<entry
+   name="nbproject"
+   kind="dir"/>
+<entry
+   name="spec"
+   kind="dir"/>
+<entry
+   committed-rev="2"
+   name="README"
+   text-time="2014-04-21T15:43:46.000000Z"
+   committed-date="2010-05-25T09:20:18.636929Z"
+   checksum="a53e887ea69b2b2a440b2b3cc8033721"
+   last-author="radigin"
+   kind="file"
+   prop-time="2014-04-21T15:43:46.000000Z"/>
+</wc-entries>
