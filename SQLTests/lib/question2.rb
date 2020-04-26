@@ -6,25 +6,25 @@ require './oracle_runner'
 class Question2
   include Question2Text
 
-  COLUMNS = {'id' => 'number(10)',
-             'lastname' => 'clob', 
-             'firstname' => 'clob', 
-             'secondname' => 'clob',
-             'age' => 'number(10)'}
+  COLUMNS = {'ID' => 'number(10)',
+             'LASTNAME' => 'varchar2(1024 char)', 
+             'FIRSTNAME' => 'varchar2(1024 char)', 
+             'SECONDNAME' => 'varchar2(1024 char)',
+             'AGE' => 'number(10)'}
 
-  REAL_COLUMNS = {'id' => 'number(10)',
-             'lastname' => 'clob',
-             'firstname' => 'clob',
-             'secondname' => 'clob',
-             'age' => 'number(10)',
-             'oid' => 'number(10)'}
+  REAL_COLUMNS = {'ID' => 'number(10)',
+             'LASTNAME' => 'varchar2(1024 char)',
+             'FIRSTNAME' => 'varchar2(1024 char)',
+             'SECONDNAME' => 'varchar2(1024 char)',
+             'AGE' => 'number(10)',
+             'OID' => 'number(10)'}
 
-  VALUES = {'id' => [1, 2, 3, 4, 5],
-            'lastname' => ['Owen', 'Nathaniel', 'Wyatt', 'Joshua', 'Daniel'],
-            'firstname' => ['Nathaniel', 'Sebastian', 'Gabriel', 'Sebastian', 'Matthew'],
-            'secondname' => ['Sanchez', 'GNelson', 'Bennett', 'Bailey', 'Foster'],
-            'age' => [30, 40, 30, 60, 30],
-            'oid' => [1, 2, 3, 4, 5]}
+  VALUES = {'ID' => [1, 2, 3, 4, 5],
+            'LASTNAME' => ['Owen', 'Nathaniel', 'Wyatt', 'Joshua', 'Daniel'],
+            'FIRSTNAME' => ['Nathaniel', 'Sebastian', 'Gabriel', 'Sebastian', 'Matthew'],
+            'SECONDNAME' => ['Sanchez', 'GNelson', 'Bennett', 'Bailey', 'Foster'],
+            'AGE' => [30, 40, 30, 60, 30],
+            'OID' => [1, 2, 3, 4, 5]}
 
   FUNCTIONS = {'integer' => {},
                'text' => {'bit\\_length' => 1,
@@ -51,28 +51,23 @@ class Question2
 
   def prepare()
     @runner = ORACLERunner.new()
-    sql = "CREATE TABLE people(\n" +
+    sql = "CREATE TABLE PEOPLE(\n" +
       REAL_COLUMNS.map{ |k, v| "#{k} #{v}" }.join(",\n") + ')'
     @runner.querry(sql)
     VALUES.values[0].each_index do |i|
-      sql = 'INSERT INTO people VALUES('
+      sql = 'INSERT INTO PEOPLE VALUES('
       args = []
       VALUES.values.each do |arr|
         args << arr[i]
       end
-      sql += args.inspect.sub("[", "").sub("]","").gsub("\"", "\'") + ");";
-      p sql;
-      # @runner.querry(sql);
+      sql += args.inspect.sub("[", "").sub("]","").gsub("\"", "\'") + ")";
+      @runner.querry(sql);
     end
   end
 
   def finish()
     @runner = ORACLERunner.new()
-    @runner.querry(%{begin
-    execute immediate 'drop table people';
- exception
-    when others then null;
- end;})
+    @runner.querry(%{begin execute immediate 'drop table PEOPLE'; exception when others then null; end;})
   end
 
   def generate()

@@ -9,7 +9,10 @@ class ORACLERunner
     end
 
     def querry(sql)
-        return @connection.exec(sql);
+        p sql;
+        res = @connection.exec(sql);
+        @connection.exec("COMMIT");
+        return res
     end
 
     def connection()
