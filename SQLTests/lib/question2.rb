@@ -53,7 +53,7 @@ class Question2
     @runner = ORACLERunner.new()
     sql = "CREATE TABLE PEOPLE(\n" +
       REAL_COLUMNS.map{ |k, v| "#{k} #{v}" }.join(",\n") + ')'
-    @runner.querry(sql)
+    @runner.querry(sql, 'commit')
     VALUES.values[0].each_index do |i|
       sql = 'INSERT INTO PEOPLE VALUES('
       args = []
@@ -61,13 +61,13 @@ class Question2
         args << arr[i]
       end
       sql += args.inspect.sub("[", "").sub("]","").gsub("\"", "\'") + ")";
-      @runner.querry(sql);
+      @runner.querry(sql, 'commit');
     end
   end
 
   def finish()
     @runner = ORACLERunner.new()
-    @runner.querry(%{begin execute immediate 'drop table PEOPLE'; exception when others then null; end;})
+    @runner.querry(%{begin execute immediate 'drop table PEOPLE'; exception when others then null; end;}, 'commit')
   end
 
   def generate()

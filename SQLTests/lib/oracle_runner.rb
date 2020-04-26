@@ -8,11 +8,20 @@ class ORACLERunner
         @connection = OCI8.new(USER, PASSWORD);
     end
 
-    def querry(sql)
+    def querry(sql, params = "")
         p sql;
-        res = @connection.exec(sql);
-        @connection.exec("COMMIT");
-        return res
+        res = []
+        if params.include? 'selectResult'
+            @connection.exec(sql) do |r| res << r; end
+        else
+            @connection.exec(sql)
+        end
+        @connection.exec("COMMIT") if params.include? 'commit'
+        if params.include? 'selectResult'
+            return res
+        else
+            return true
+        end
     end
 
     def connection()
