@@ -1,7 +1,7 @@
 # Вопрос на построение запросов, содержащих операции над множествами
 
-require './question4_text'
-require './psql_runner'
+require 'question4_text'
+require 'psql_runner'
 
 class Question4
   include Question4Text

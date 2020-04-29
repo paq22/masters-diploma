@@ -4,7 +4,7 @@ require './question1'
 
 class Theme1
   USED_CLASSES = [Question1]
-  QUESTION_SIZE = 2 # изменила. было 500
+  QUESTION_SIZE = 500
 
   def initialize(num = 1)
     @size = num

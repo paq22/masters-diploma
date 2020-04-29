@@ -1,12 +1,13 @@
 # Тема 2
 
 require './question2'
-require './question3'
-require './question4'
+# require 'question3'
+# require 'question4'
 
 class Theme2
-  USED_CLASSES = [Question2, Question3, Question4]
-  QUESTION_SIZE = 2 # изменила. было 500
+  # USED_CLASSES = [Question2, Question3, Question4]
+  USED_CLASSES = [Question2]
+  QUESTION_SIZE = 3
 
   def initialize(num = 3)
     @size = num

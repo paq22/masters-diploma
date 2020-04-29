@@ -1,12 +1,8 @@
-require './question2'
+require './theme2'
 
-question2 = Question2.new()
-question2.finish()
-question2.prepare()
-# question2.generate()
+USED_THEMES = [Theme2]
 
-#  Dir.chdir("tests_themes")
-#   # puts Dir.pwd
-# file = File.open('theme2.txt', 'w+')
-#     file.puts(question2.finish(), question2.prepare(), question2.generate())
-# file.close()
+puts(USED_THEMES.map do |t|
+  theme = t.new
+  theme.theme_test()
+end.join("\n"))

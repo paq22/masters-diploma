@@ -9,19 +9,17 @@ class ORACLERunner
     end
 
     def querry(sql, params = "")
-        p sql;
-        res = []
-        if params.include? 'selectResult'
-            @connection.exec(sql) do |r| res << r; end
-        else
-            @connection.exec(sql)
-        end
+        # p sql;
+        @connection.exec(sql)
         @connection.exec("COMMIT") if params.include? 'commit'
-        if params.include? 'selectResult'
-            return res
-        else
-            return true
-        end
+    end
+
+    def select(sql)
+        # p sql;
+        res = []
+        @connection.exec(sql) do |r| res << r; end
+        # p res
+        return res
     end
 
     def connection()

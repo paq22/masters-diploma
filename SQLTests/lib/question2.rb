@@ -12,37 +12,36 @@ class Question2
              'SECONDNAME' => 'varchar2(1024 char)',
              'AGE' => 'number(10)'}
 
-  REAL_COLUMNS = {'ID' => 'number(10)',
+  REAL_COLUMNS = {'ID' => 'number(10)', 
              'LASTNAME' => 'varchar2(1024 char)',
              'FIRSTNAME' => 'varchar2(1024 char)',
              'SECONDNAME' => 'varchar2(1024 char)',
-             'AGE' => 'number(10)',
-             'OID' => 'number(10)'}
+             'AGE' => 'number(10)'}
+            #  'OID' => 'number(10)'}
 
   VALUES = {'ID' => [1, 2, 3, 4, 5],
             'LASTNAME' => ['Owen', 'Nathaniel', 'Wyatt', 'Joshua', 'Daniel'],
             'FIRSTNAME' => ['Nathaniel', 'Sebastian', 'Gabriel', 'Sebastian', 'Matthew'],
             'SECONDNAME' => ['Sanchez', 'GNelson', 'Bennett', 'Bailey', 'Foster'],
-            'AGE' => [30, 40, 30, 60, 30],
-            'OID' => [1, 2, 3, 4, 5]}
+            'AGE' => [30, 40, 30, 60, 30]}
+            #'OID' => [1, 2, 3, 4, 5]}
 
-  FUNCTIONS = {'integer' => {},
-               'text' => {'bit\\_length' => 1,
-                          'char\\_length' => 1,
-                          'lower' => 1,
-                          'substring' => 3,
-                          'trim' => 1,
-                          'upper' => 1}}
-  AGGREGATES = {'integer' => [['count(', ')'], ['cast(avg(', ') as integer)'],
-                              ['max(', ')'], ['min(', ')'], ['sum(', ')']],
-                'text' => [['count(', ')']]}
+  FUNCTIONS = {'number(10)' => {},
+               'varchar2(1024 char)' => {'LENGTH' => 1,
+                          'LOWER' => 1,
+                          'SUBSTR' => 3,
+                          'TRIM' => 1,
+                          'UPPER' => 1}}
+  AGGREGATES = {'number(10)' => [['count(', ')'], ['CAST(AVG(', ') as number(10))'],
+                              ['MAX(', ')'], ['MIN(', ')'], ['SUM(', ')']],
+                'varchar2(1024 char)' => [['count(', ')']]}
 
   WHERE = [[' = ', 1], [' in (', 2, ')'],
-                      [' like \'', 1, '\'']]
+                      [' like ', 1, '']]
 
   HAVING = [' > 0', ' > 1', ' < 1', ' < 100', ' > 100']
 
-  ORDER_BY = ['', ' DESC', ' ASC']
+  ORDER_BY = [' DESC', ' ASC']
 
   def initialize(size = 1)
     @size = size
@@ -76,15 +75,15 @@ class Question2
     while stop
       begin
         sql, fields = generate_select()
-        p sql
-        stop = false
         result = @runner.select(sql)
-        p result
-        # stop = false if result.size > 0 and
-        #   result.first.to_a.join('').strip != ''
+        stop = false
+        stop = false if result.size > 0 and
+          result.first.to_a.join('').strip != ''
       rescue
+        # # raise 'sql error'
       end
     end
+    # raise 'stop'
     data = result.first.to_a
     goods = [sql]
     bads = []
@@ -113,7 +112,7 @@ class Question2
     is_distinct = false
     is_group_by = false
     x = rand(3)
-    is_distinct = (x == 1)
+    is_distinct = (x == - 1) # выключила добавление distinct в запрос
     is_group_by = (x == 2)
     x = rand(2)
     is_having = (is_group_by and x == 1)
@@ -121,17 +120,15 @@ class Question2
     is_order_by = ((x == 1) or is_group_by)
     x = rand(2)
     is_where = (x == 1)
-    result = 'SELECT * from ('
-    result += 'SELECT '
+    result = 'SELECT '
     fields_string, fields, grouped_fields = list_fields(is_group_by, fields)
     result += get_distinct(fields) if is_distinct
     result += fields_string
-    result += "\'" if is_distinct
-    result += ' FROM people '
+    result += 'FROM people '
     result += 'WHERE ' + get_where(fields) if is_where
     result += get_group_by(grouped_fields, is_having, fields) if is_group_by
     result += get_order_by(is_order_by, fields, is_group_by)
-    result += ') WHERE rownum <= 1;'
+    # result += 'LIMIT 1'
     return result, fields
   end
 
@@ -142,7 +139,7 @@ class Question2
     string = fields.map do |f|
       result = f
       x = rand(2)
-      is_func = (x == 1)
+      is_func = (x == 1) # выключил добавление функций в запрос
       funcs = FUNCTIONS[COLUMNS[f]]
       if is_func and funcs.keys.size > 0
         func = funcs.keys[rand(funcs.keys.size)]
@@ -151,7 +148,7 @@ class Question2
         end.join('') + ')'
       end
       x = rand(2)
-      is_aggregate = (x == 1)
+      is_aggregate = (x == -1) # выключил добавление аггрегатов
       if is_group_by and is_aggregate
         funcs = AGGREGATES[COLUMNS[f]]
         func = funcs[rand(funcs.size)]
@@ -161,17 +158,17 @@ class Question2
       end
       result
     end.join(', ')
-    return string, fields, grouped_fields
+    return string + ' ', fields, grouped_fields
   end
 
   def get_distinct(fields)
     x = rand(2)
-    is_on = false
+    is_on = (x == 1)
     if is_on
       return 'DISTINCT ON(' +
         fields.shuffle[0..(1 + rand(fields.size - 1))].join(', ') + ') '
     else
-      return 'DISTINCT \''
+      return 'DISTINCT '
     end
   end
 
@@ -180,12 +177,12 @@ class Question2
     jop = (rand(2) == 1 ? ' OR ' : ' AND ')
     ufs.map do |f|
       op = WHERE[rand(WHERE.size)]
-      if COLUMNS[f] == 'text'
-        "'#{f}'" + op[0] +
+      if COLUMNS[f] == 'varchar2(1024 char)'
+        f + op[0] +
           VALUES[f][0...op[1]].map{ |i| "'" + i + "'" }.join(', ') +
           op[2..-1].join('')
       else
-        "'#{f}'" + op[0] +
+        f + op[0] +
           VALUES[f][0...op[1]].join(', ') +
           op[2..-1].join('')
       end
@@ -208,13 +205,13 @@ class Question2
   end
 
   def get_order_by(is_order_by, fields, is_group_by)
-    return 'ORDER BY \'oid\' ' unless is_order_by
+    return 'ORDER BY \'OID\' ' unless is_order_by
     num = 1 + rand(fields.size)
     fields = fields.shuffle[0...num]
     string = fields.map do |f|
-      result = "'#{f}'"
+      result = f
       x = rand(2)
-      is_func = (x == 1)
+      is_func = (x == 1) # выключил добавление функций в запрос
       funcs = FUNCTIONS[COLUMNS[f]]
       if is_func and funcs.keys.size > 0
         func = funcs.keys[rand(funcs.keys.size)]
@@ -223,7 +220,7 @@ class Question2
         end.join('') + ')'
       end
       x = rand(2)
-      is_aggregate = (x == 1)
+      is_aggregate = (x == -1) # выключил добавление аггрегатов
       if is_group_by and is_aggregate
         funcs = AGGREGATES[COLUMNS[f]]
         func = funcs[rand(funcs.size)]

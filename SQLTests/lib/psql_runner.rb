@@ -1,4 +1,4 @@
-# require 'rubygems'
+require 'rubygems'
 # require 'dbi'
 
 class PSQLRunner
@@ -14,11 +14,11 @@ class PSQLRunner
   end
 
   def select(sql)
-    @connection.select_all(sql)
+    # @connection.select_all(sql)
   end
 
   def querry(sql)
-    # puts "PSQL querry:\n#{sql}"
+    p sql
     # @connection.do(sql)
   end
 

@@ -1,7 +1,7 @@
 # Вопрос на построение запросов вида найдите ответ
 
-require './question3_text'
-require './psql_runner'
+require 'question3_text'
+require 'psql_runner'
 
 class Question3
   include Question3Text

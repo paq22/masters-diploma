@@ -5,7 +5,7 @@ require 'oci8'
 connection = OCI8.new('C##PA', 'PAPASSWORD')
 
 # пример запроса к БД, который выполняется через Oracle, но не выполняется через Ruby
-connection.exec("SELECT * from (SELECT lastname FROM people ORDER BY 'lastname' ASC ) WHERE rownum <= 1;") do |responce|
+connection.exec("SELECT * from (SELECT lastname FROM people ORDER BY lastname ASC ) WHERE rownum <= 1") do |responce|
     p responce
 end
 
