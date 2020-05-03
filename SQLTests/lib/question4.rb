@@ -103,8 +103,7 @@ class Question4
           end
           querries << sql
         end
-        sql = querries[1] + ' ' + OPS.shuffle.first + ' ' + querries[2]
-            # + ' ' + OPS.shuffle.first + ' ' + querries[0]
+        sql = querries[1] + ' ' + OPS.shuffle.first + ' ' + querries[2] + ' ' + OPS.shuffle.first + ' ' + querries[0]
         result = @runner.select(sql)
         something_wrong = false
         data_size, data = result.size, result.last.to_a
