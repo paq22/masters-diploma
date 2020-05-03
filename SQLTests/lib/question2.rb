@@ -32,6 +32,7 @@ class Question2
                           'SUBSTR' => 3,
                           'TRIM' => 1,
                           'UPPER' => 1}}
+                          
   AGGREGATES = {'number(10)' => [['count(', ')'], ['CAST(AVG(', ') as number(10))'],
                               ['MAX(', ')'], ['MIN(', ')'], ['SUM(', ')']],
                 'varchar2(1024 char)' => [['count(', ')']]}
@@ -236,6 +237,7 @@ class Question2
   end
 
   def generate_all
+    finish()
     prepare()
     @size.times do
       @variants << generate

@@ -1,54 +1,52 @@
 # Вопрос на построение запросов, содержащих операции над множествами
 
-require 'question4_text'
-require 'psql_runner'
+require './question4_text'
+require './oracle_runner'
 
 class Question4
   include Question4Text
 
-  COLUMNS = {'id' => 'integer',
-             'lastname' => 'text', 
-             'firstname' => 'text', 
-             'secondname' => 'text',
-             'age' => 'integer'}
+  COLUMNS = {'ID' => 'number(10)',
+             'LASTNAME' => 'varchar2(1024 char)', 
+             'FIRSTNAME' => 'varchar2(1024 char)', 
+             'SECONDNAME' => 'varchar2(1024 char)',
+             'AGE' => 'number(10)'}
 
-  REAL_COLUMNS = {'id' => 'integer',
-             'lastname' => 'text',
-             'firstname' => 'text',
-             'secondname' => 'text',
-             'age' => 'integer',
-             'oid' => 'integer'}
+  REAL_COLUMNS = {'ID' => 'number(10)', 
+             'LASTNAME' => 'varchar2(1024 char)',
+             'FIRSTNAME' => 'varchar2(1024 char)',
+             'SECONDNAME' => 'varchar2(1024 char)',
+             'AGE' => 'number(10)'}
+            #  'OID' => 'number(10)'}
 
-  VALUES = {'id' => [1, 2, 3, 4, 5],
-            'lastname' => ['Ivanov', 'Petrov', 'Sidorov',
+  VALUES = {'ID' => [1, 2, 3, 4, 5],
+            'LASTNAME' => ['Ivanov', 'Petrov', 'Sidorov',
                             'Vasilev', 'Mihailov'],
-            'firstname' => ['Ivan', 'Petr', 'Sidor', 'Petr', 'Mihail'],
-            'secondname' => ['Ivanovich', 'Petrovich', 'Sidorovich',
+            'FIRSTNAME' => ['Ivan', 'Petr', 'Sidor', 'Petr', 'Mihail'],
+            'SECONDNAME' => ['Ivanovich', 'Petrovich', 'Sidorovich',
                               'Vasilevich', 'Ivanovich'],
-            'age' => [30, 40, 30, 60, 30],
-            'oid' => [1, 2, 3, 4, 5]}
+            'AGE' => [30, 40, 30, 60, 30]}
+            #'OID' => [1, 2, 3, 4, 5]}
+  FUNCTIONS = {'number(10)' => {},
+            'varchar2(1024 char)' => {'LENGTH' => 1,
+                       'LOWER' => 1,
+                       'SUBSTR' => 3,
+                       'TRIM' => 1,
+                       'UPPER' => 1}}
 
-  FUNCTIONS = {'integer' => {},
-               'text' => {'bit\\_length' => 1,
-                          'char\\_length' => 1,
-                          'lower' => 1,
-                          'substring' => 3,
-                          'trim' => 1,
-                          'upper' => 1}}
-
-  AGGREGATES = {'integer' => [['count(', ')'], ['cast(avg(', ') as integer)'],
-                              ['max(', ')'], ['min(', ')'], ['sum(', ')']],
-                'text' => [['count(', ')']]}
+  AGGREGATES = {'number(10)' => [['count(', ')'], ['CAST(AVG(', ') as number(10))'],
+                       ['MAX(', ')'], ['MIN(', ')'], ['SUM(', ')']],
+          'varchar2(1024 char)' => [['count(', ')']]}
 
   WHERE = [[' = ', 1], [' in (', 2, ')'],
                       [' like ', 1, '']]
 
   HAVING = [' > 0', ' > 1', ' < 1', ' < 100', ' > 100']
 
-  ORDER_BY = ['', ' DESC', ' ASC']
+  ORDER_BY = [' ASC', ' DESC', ' ASC']
 
-  OPS = ['UNION', 'EXCEPT', 'INTERSECT',
-    'UNION ALL', 'EXCEPT ALL', 'INTERSECT ALL']
+  OPS = ['UNION', 'INTERSECT']
+    # 'UNION ALL', 'EXCEPT ALL', 'INTERSECT ALL']
 
   def initialize(size = 1)
     @size = size
@@ -56,21 +54,24 @@ class Question4
   end
 
   def prepare()
-    @runner = PSQLRunner.new()
+    @runner = ORACLERunner.new()
     sql = "CREATE TABLE people(\n" +
       REAL_COLUMNS.map{ |k, v| "#{k} #{v}" }.join(",\n") + ')'
-    @runner.querry(sql)
+    @runner.querry(sql, 'commit')
     VALUES.values[0].each_index do |i|
-      sql = 'INSERT INTO people VALUES(' +
-        ('?, ' * (REAL_COLUMNS.keys.size - 1)) + '?)'
-      @runner.connection.do(sql, *(VALUES.values.map{ |e| e[i] }))
+      sql = 'INSERT INTO PEOPLE VALUES('
+      args = []
+      VALUES.values.each do |arr|
+        args << arr[i]
+      end
+      sql += args.inspect.sub("[", "").sub("]","").gsub("\"", "\'") + ")"
+      @runner.querry(sql, 'commit');
     end
   end
 
   def finish()
-    sql = 'DROP TABLE people'
-    @runner.querry(sql)
-    @runner.destroy()
+    @runner = ORACLERunner.new()
+    @runner.querry(%{begin execute immediate 'drop table PEOPLE'; exception when others then null; end;}, 'commit')
   end
 
   def generate()
@@ -102,9 +103,10 @@ class Question4
           end
           querries << sql
         end
-        sql = querries[1] + ' ' + OPS.shuffle.first + ' ' +
-          querries[2] + ' ' + OPS.shuffle.first + ' ' + querries[0]
+        sql = querries[1] + ' ' + OPS.shuffle.first + ' ' + querries[2]
+            # + ' ' + OPS.shuffle.first + ' ' + querries[0]
         result = @runner.select(sql)
+        something_wrong = false
         data_size, data = result.size, result.last.to_a
         something_wrong = false if data_size > 0 and data.join('').size > 2
       rescue
@@ -117,7 +119,7 @@ class Question4
     is_distinct = false
     is_group_by = false
     x = rand(3)
-    is_distinct = (x == 1)
+    is_distinct = (x == -1)
     is_group_by = (x == 2)
     x = rand(2)
     is_having = (is_group_by and x == 1)
@@ -239,6 +241,7 @@ class Question4
   end
 
   def generate_all
+    finish()
     prepare()
     @size.times do
       @variants << generate()
