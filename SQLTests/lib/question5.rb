@@ -1,50 +1,49 @@
 # Вопросы на построение запросов вида выберите кто подходит под ответ
 
-require 'question5_text'
-require 'psql_runner'
+require './question5_text'
+require './oracle_runner'
 
 class Question5
   include Question5Text
 
-  COLUMNS = {'id' => 'integer',
-             'lastname' => 'text', 
-             'firstname' => 'text', 
-             'secondname' => 'text',
-             'age' => 'integer'}
+  COLUMNS = {'ID' => 'number(10)',
+             'LASTNAME' => 'varchar2(1024 char)', 
+             'FIRSTNAME' => 'varchar2(1024 char)', 
+             'SECONDNAME' => 'varchar2(1024 char)',
+             'AGE' => 'number(10)'}
 
-  REAL_COLUMNS = {'id' => 'integer',
-             'lastname' => 'text',
-             'firstname' => 'text',
-             'secondname' => 'text',
-             'age' => 'integer',
-             'oid' => 'integer'}
+  REAL_COLUMNS = {'ID' => 'number(10)', 
+             'LASTNAME' => 'varchar2(1024 char)',
+             'FIRSTNAME' => 'varchar2(1024 char)',
+             'SECONDNAME' => 'varchar2(1024 char)',
+             'AGE' => 'number(10)'}
+            #  'OID' => 'number(10)'}
 
-  VALUES = {'id' => [1, 2, 3, 4, 5],
-            'lastname' => ['Ivanov', 'Petrov', 'Sidorov',
+  VALUES = {'ID' => [1, 2, 3, 4, 5],
+            'LASTNAME' => ['Ivanov', 'Petrov', 'Sidorov',
                             'Vasilev', 'Mihailov'],
-            'firstname' => ['Ivan', 'Petr', 'Sidor', 'Petr', 'Mihail'],
-            'secondname' => ['Ivanovich', 'Petrovich', 'Sidorovich',
+            'FIRSTNAME' => ['Ivan', 'Petr', 'Sidor', 'Petr', 'Mihail'],
+            'SECONDNAME' => ['Ivanovich', 'Petrovich', 'Sidorovich',
                               'Vasilevich', 'Ivanovich'],
-            'age' => [30, 40, 30, 60, 30],
-            'oid' => [1, 2, 3, 4, 5]}
+            'AGE' => [30, 40, 30, 60, 30]}
+            #'OID' => [1, 2, 3, 4, 5]}
+  FUNCTIONS = {'number(10)' => {},
+            'varchar2(1024 char)' => {'LENGTH' => 1,
+                       'LOWER' => 1,
+                       'SUBSTR' => 3,
+                       'TRIM' => 1,
+                       'UPPER' => 1}}
 
-  FUNCTIONS = {'integer' => {},
-               'text' => {'bit\\_length' => 1,
-                          'char\\_length' => 1,
-                          'lower' => 1,
-                          'substring' => 3,
-                          'trim' => 1,
-                          'upper' => 1}}
-  AGGREGATES = {'integer' => [['count(', ')'], ['cast(avg(', ') as integer)'],
-                              ['max(', ')'], ['min(', ')'], ['sum(', ')']],
-                'text' => [['count(', ')']]}
+  AGGREGATES = {'number(10)' => [['count(', ')'], ['CAST(AVG(', ') as number(10))'],
+                       ['MAX(', ')'], ['MIN(', ')'], ['SUM(', ')']],
+          'varchar2(1024 char)' => [['count(', ')']]}
 
   WHERE = [[' = ', 1], [' in (', 2, ')'],
                       [' like ', 1, '']]
 
   HAVING = [' > 0', ' > 1', ' < 1', ' < 100', ' > 100']
 
-  ORDER_BY = ['', ' DESC', ' ASC']
+  ORDER_BY = [' ASC', ' DESC', ' ASC']
 
   def initialize(size = 1)
     @size = size
@@ -52,21 +51,24 @@ class Question5
   end
 
   def prepare()
-    @runner = PSQLRunner.new()
+    @runner = ORACLERunner.new()
     sql = "CREATE TABLE people(\n" +
       REAL_COLUMNS.map{ |k, v| "#{k} #{v}" }.join(",\n") + ')'
-    @runner.querry(sql)
-    VALUES.values[0].each_index do |i|
-      sql = 'INSERT INTO people VALUES(' +
-        ('?, ' * (REAL_COLUMNS.keys.size - 1)) + '?)'
-      @runner.connection.do(sql, *(VALUES.values.map{ |e| e[i] }))
+      @runner.querry(sql, 'commit')
+      VALUES.values[0].each_index do |i|
+        sql = 'INSERT INTO PEOPLE VALUES('
+        args = []
+        VALUES.values.each do |arr|
+          args << arr[i]
+        end
+        sql += args.inspect.sub("[", "").sub("]","").gsub("\"", "\'") + ")"
+        @runner.querry(sql, 'commit');
     end
   end
 
   def finish()
-    sql = 'DROP TABLE people'
-    @runner.querry(sql)
-    @runner.destroy()
+    @runner = ORACLERunner.new()
+    @runner.querry(%{begin execute immediate 'drop table PEOPLE'; exception when others then null; end;}, 'commit')
   end
 
   def generate()
@@ -75,6 +77,7 @@ class Question5
     while stop
       begin
         sql, fields = generate_select(fields, false, false)
+        # p sql
         result = @runner.select(sql)
         stop = false if result.size > 0 and result.first.to_a.join('').size > 4
       rescue
@@ -89,7 +92,7 @@ class Question5
     is_distinct = false
     is_group_by = false
     x = rand(3)
-    is_distinct = (x == 1)
+    is_distinct = (x == -1)
     is_group_by = ((x == 2) and enable_group_by)
     x = rand(2)
     is_having = (is_group_by and x == 1)
@@ -118,8 +121,8 @@ class Question5
       result += 'WHERE ' + get_where(fields) if is_where
     end
     result += get_group_by(grouped_fields, is_having, fields) if is_group_by
-    result += get_order_by(is_order_by, fields, is_group_by)
-    result += 'LIMIT 1'
+    # result += get_order_by(is_order_by, fields, is_group_by)
+    # result += 'LIMIT 1'
     return result, fields
   end
 
@@ -168,7 +171,7 @@ class Question5
     jop = (rand(2) == 1 ? ' OR ' : ' AND ')
     ufs.map do |f|
       op = WHERE[rand(WHERE.size)]
-      if COLUMNS[f] == 'text'
+      if COLUMNS[f] == 'varchar2(1024 char)'
         f + op[0] +
           VALUES[f][0...op[1]].map{ |i| "'" + i + "'" }.join(', ') +
           op[2..-1].join('')
@@ -196,7 +199,7 @@ class Question5
   end
 
   def get_order_by(is_order_by, fields, is_group_by)
-    return 'ORDER BY oid ' unless is_order_by
+    return 'ORDER BY \'OID\' ' unless is_order_by
     num = 1 + rand(fields.size)
     fields = fields.shuffle[0...num]
     string = fields.map do |f|
@@ -227,6 +230,7 @@ class Question5
   end
 
   def generate_all
+    finish()
     prepare()
     @size.times do
       @variants << generate

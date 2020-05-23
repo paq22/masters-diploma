@@ -1,10 +1,10 @@
 # Тема 3
 
-require 'question5'
+require './question5'
 
 class Theme3
   USED_CLASSES = [Question5]
-  QUESTION_SIZE = 500
+  QUESTION_SIZE = 3
 
   def initialize(num = 1)
     @size = num
